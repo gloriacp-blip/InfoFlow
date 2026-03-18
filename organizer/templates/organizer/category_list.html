@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Categorías | InfoFlow{% endblock %}
+{% block content %}
+<section class="section-head">
+  <div><span class="badge">Organización</span><h1>Categorías</h1><p>Clasifica la información para encontrarla más rápido y mantener ordenado el sistema.</p></div>
+  <a class="btn primary" href="{% url 'category_create' %}">Nueva categoría</a>
+</section>
+<section class="panel">
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Nombre</th><th>Descripción</th><th>Total de recursos</th><th>Acciones</th></tr></thead>
+      <tbody>
+        {% for category in categories %}
+        <tr>
+          <td><strong>{{ category.name }}</strong></td>
+          <td>{{ category.description|default:"Sin descripción" }}</td>
+          <td>{{ category.total_resources }}</td>
+          <td class="actions"><a class="btn small secondary" href="{% url 'category_update' category.pk %}">Editar</a><a class="btn small danger" href="{% url 'category_delete' category.pk %}">Eliminar</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No hay categorías registradas.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

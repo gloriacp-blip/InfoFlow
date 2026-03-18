@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Recursos | InfoFlow{% endblock %}
+{% block content %}
+<section class="section-head">
+  <div><span class="badge">Módulo principal</span><h1>Recursos</h1><p>Guarda y organiza recursos digitales con búsqueda, filtros y clasificación.</p></div>
+  <a class="btn primary" href="{% url 'resource_create' %}">Nuevo recurso</a>
+</section>
+<section class="panel">
+  <form method="get" class="filter-grid">
+    <input type="text" name="q" value="{{ query }}" placeholder="Buscar por título o descripción">
+    <select name="category">
+      <option value="">Todas las categorías</option>
+      {% for category in categories %}
+      <option value="{{ category.id }}" {% if category_id == category.id|stringformat:'s' %}selected{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+    </select>
+    <select name="status">
+      <option value="">Todos los estados</option>
+      <option value="pendiente" {% if status == 'pendiente' %}selected{% endif %}>Pendiente</option>
+      <option value="revisado" {% if status == 'revisado' %}selected{% endif %}>Revisado</option>
+      <option value="importante" {% if status == 'importante' %}selected{% endif %}>Importante</option>
+    </select>
+    <button class="btn primary" type="submit">Aplicar filtros</button>
+  </form>
+</section>
+<section class="panel">
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Título</th><th>Categoría</th><th>Estado</th><th>Prioridad</th><th>Enlace</th><th>Acciones</th></tr></thead>
+      <tbody>
+        {% for resource in resources %}
+        <tr>
+          <td><strong>{{ resource.title }}</strong><div class="muted">{{ resource.description|truncatechars:80 }}</div></td>
+          <td>{{ resource.category.name }}</td>
+          <td>{{ resource.get_status_display }}</td>
+          <td>{{ resource.get_priority_display }}</td>
+          <td>{% if resource.url %}<a class="link-btn" href="{{ resource.url }}" target="_blank" rel="noopener">Abrir</a>{% else %}<span class="muted">Sin enlace</span>{% endif %}</td>
+          <td class="actions"><a class="btn small secondary" href="{% url 'resource_update' resource.pk %}">Editar</a><a class="btn small danger" href="{% url 'resource_delete' resource.pk %}">Eliminar</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No hay recursos para mostrar.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

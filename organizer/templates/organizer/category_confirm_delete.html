@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar categoría | InfoFlow{% endblock %}
+{% block content %}
+<section class="panel form-panel">
+  <span class="badge danger-badge">Eliminar</span>
+  <h1>¿Eliminar categoría?</h1>
+  <p>Vas a eliminar <strong>{{ category.name }}</strong>. Si tiene recursos asociados, también se eliminarán.</p>
+  <form method="post">{% csrf_token %}
+    <div class="form-actions"><a href="{% url 'category_list' %}" class="btn secondary">Cancelar</a><button type="submit" class="btn danger">Sí, eliminar</button></div>
+  </form>
+</section>
+{% endblock %}

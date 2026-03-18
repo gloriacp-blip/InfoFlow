@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Servicio de base de datos PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: infoflow_db
+    environment:
+      POSTGRES_DB: infoflow_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Servicio de aplicación Django
+  web:
+    build: .
+    container_name: infoflow_web
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: "True"
+      SECRET_KEY: "django-insecure-development-key"
+      DB_ENGINE: "django.db.backends.postgresql"
+      DB_NAME: "infoflow_db"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+    driver: local

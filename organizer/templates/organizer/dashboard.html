@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | InfoFlow{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <span class="badge">Organizador inteligente de recursos</span>
+    <h1>InfoFlow</h1>
+    <p>Organiza enlaces, documentos y referencias en una sola app. Muestra búsqueda, filtros, dashboard, modelos y CRUD con Django.</p>
+  </div>
+  <div class="hero-actions">
+    <a class="btn primary" href="{% url 'resource_create' %}">Nuevo recurso</a>
+    <a class="btn secondary" href="{% url 'category_create' %}">Nueva categoría</a>
+  </div>
+</section>
+
+<section class="stats-grid">
+  <article class="stat-card"><h3>{{ total_resources }}</h3><p>Total de recursos</p></article>
+  <article class="stat-card"><h3>{{ pending_resources }}</h3><p>Pendientes</p></article>
+  <article class="stat-card"><h3>{{ reviewed_resources }}</h3><p>Revisados</p></article>
+  <article class="stat-card"><h3>{{ important_resources }}</h3><p>Importantes</p></article>
+</section>
+
+<section class="panel-grid">
+  <div class="panel">
+    <div class="panel-head"><h2>Búsqueda rápida</h2></div>
+    <form method="get" class="filter-grid">
+      <input type="text" name="q" value="{{ query }}" placeholder="Buscar por título o descripción">
+      <select name="category">
+        <option value="">Todas las categorías</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}" {% if category_id == category.id|stringformat:'s' %}selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+      </select>
+      <select name="status">
+        <option value="">Todos los estados</option>
+        <option value="pendiente" {% if status == 'pendiente' %}selected{% endif %}>Pendiente</option>
+        <option value="revisado" {% if status == 'revisado' %}selected{% endif %}>Revisado</option>
+        <option value="importante" {% if status == 'importante' %}selected{% endif %}>Importante</option>
+      </select>
+      <button class="btn primary" type="submit">Filtrar</button>
+    </form>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><h2>Categorías con más recursos</h2></div>
+    <ul class="summary-list">
+      {% for category in category_summary %}
+      <li><span>{{ category.name }}</span><strong>{{ category.total }}</strong></li>
+      {% empty %}
+      <li>No hay categorías aún.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Recursos recientes</h2><a href="{% url 'resource_list' %}" class="link-btn">Ver todos</a></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Título</th><th>Categoría</th><th>Estado</th><th>Prioridad</th><th>Fecha</th></tr></thead>
+      <tbody>
+        {% for resource in resources %}
+        <tr>
+          <td>{{ resource.title }}</td>
+          <td>{{ resource.category.name }}</td>
+          <td>{{ resource.get_status_display }}</td>
+          <td>{{ resource.get_priority_display }}</td>
+          <td>{{ resource.created_at|date:'d/m/Y' }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Aún no hay recursos registrados.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

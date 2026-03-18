@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar recurso | InfoFlow{% endblock %}
+{% block content %}
+<section class="panel form-panel">
+  <span class="badge danger-badge">Eliminar</span>
+  <h1>¿Eliminar recurso?</h1>
+  <p>Vas a eliminar <strong>{{ resource.title }}</strong>. Esta acción no se puede deshacer.</p>
+  <form method="post">{% csrf_token %}
+    <div class="form-actions"><a href="{% url 'resource_list' %}" class="btn secondary">Cancelar</a><button type="submit" class="btn danger">Sí, eliminar</button></div>
+  </form>
+</section>
+{% endblock %}

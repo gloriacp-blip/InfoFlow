@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} | InfoFlow{% endblock %}
+{% block content %}
+<section class="section-head"><div><span class="badge">Formulario</span><h1>{{ title }}</h1><p>Completa la información del recurso para guardarlo.</p></div></section>
+<section class="panel form-panel">
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+      <label>{{ field.label }}</label>
+      {{ field }}
+      {% if field.errors %}<small class="error">{{ field.errors|striptags }}</small>{% endif %}
+    </div>
+    {% endfor %}
+    <div class="form-actions"><a href="{% url 'resource_list' %}" class="btn secondary">Cancelar</a><button type="submit" class="btn primary">Guardar recurso</button></div>
+  </form>
+</section>
+{% endblock %}

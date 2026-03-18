@@ -1,0 +1,19 @@
+# Django Framework
+Django>=4.2,<5.0
+
+# Base de datos PostgreSQL
+psycopg2-binary>=2.9.9
+
+# Herramientas de desarrollo y producción
+python-decouple>=3.8  # Manejo de variables de entorno
+gunicorn>=21.2.0     # Servidor WSGI para producción
+whitenoise>=6.6.0    # Servir archivos estáticos en producción
+
+# Validación y seguridad
+django-cors-headers>=4.3.1  # Manejo de CORS
+django-environ>=0.11.2      # Gestión de configuración (Versión Corregida)
+
+# Herramientas de desarrollo (opcional)
+django-extensions>=3.2.3    # Comandos útiles de Django
+black>=23.12.0              # Formateador de código
+flake8>=6.1.0               # Linter de Python
