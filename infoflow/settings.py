@@ -3,9 +3,6 @@ Configuración de Django para InfoFlow - Proyecto de Portafolio
 
 Este archivo contiene la configuración principal de la aplicación Django.
 Se utiliza tanto en desarrollo como en producción con variables de entorno.
-
-Autor: Tu Nombre
-Fecha: 2024
 """
 
 import os
@@ -18,7 +15,7 @@ from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Clave secreta para producción - DEBE cambiar en deployment
+# Clave secreta para producción - se DEBE cambiar en deployment
 SECRET_KEY = config(
     'SECRET_KEY',
     default='django-insecure-change-this-key-in-production'
