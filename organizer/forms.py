@@ -4,8 +4,6 @@ Formularios de la aplicación InfoFlow
 Define los formularios para crear y editar categorías y recursos.
 Incluye validaciones personalizadas y widgets mejorados.
 
-Autor: Tu Nombre
-Fecha: 2024
 """
 
 from django import forms
