@@ -4,8 +4,6 @@ Modelos de la aplicación InfoFlow
 Define la estructura de datos para categorías y recursos digitales.
 Incluye validaciones, índices de base de datos y métodos útiles.
 
-Autor: Tu Nombre
-Fecha: 2024
 """
 
 from django.db import models
