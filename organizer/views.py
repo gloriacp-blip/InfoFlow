@@ -4,8 +4,6 @@ Vistas de la aplicación InfoFlow
 Contiene las vistas para mostrar y gestionar categorías y recursos.
 Incluye búsqueda, filtros, paginación y optimizaciones de rendimiento.
 
-Autor: Tu Nombre
-Fecha: 2024
 """
 
 from django.db.models import Count, Q
