@@ -4,8 +4,6 @@ Configuración del panel de administración de Django para InfoFlow
 Define cómo se muestran y gestionan los modelos en el panel admin.
 Incluye filtros, búsqueda, acciones personalizadas y optimizaciones.
 
-Autor: Tu Nombre
-Fecha: 2024
 """
 
 from django.contrib import admin
